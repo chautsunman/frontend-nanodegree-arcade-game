@@ -37,13 +37,14 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function(x, y) {
+var Player = function() {
     // set the image
     this.sprite = "images/char-boy.png";
 
     // set initial location
-    this.x = x;
-    this.y = y;
+    this.x = 0;
+    this.y = 0;
+    this.reset();
 };
 
 // update the player's location
@@ -103,13 +104,23 @@ Player.prototype.handleInput = function(direction) {
 
             break;
     }
+
+    // reset the location if the player reaches the water
+    if (this.y === 0) {
+        this.reset();
+    }
+};
+
+Player.prototype.reset = function() {
+    this.x = 270;
+    this.y = 270;
 };
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [new Enemy(50, 50, 130)];
-var player = new Player(270, 270);
+var player = new Player();
 
 
 // This listens for key presses and sends the keys to your
