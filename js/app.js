@@ -27,11 +27,31 @@ Enemy.prototype.update = function(dt) {
     if (this.x > document.getElementsByTagName("canvas")[0].width) {
         this.x = -this.speed;
     }
+
+    // reset the player if the enemy collides with him
+    if (this.collideWithPlayer(player)) {
+        player.reset();
+    }
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// check if the enemy collides with the player
+Enemy.prototype.collideWithPlayer = function(player) {
+    var enemySprite = window.Resources.get(this.sprite)
+    var playerSprite = window.Resources.get(player.sprite);
+
+    if (this.x + enemySprite.width < player.x ||
+        this.x > player.x + playerSprite.width ||
+        this.y + enemySprite.height < player.y ||
+        this.y > player.y + playerSprite.height) {
+        return false;
+    }
+
+    return true;
 };
 
 // Now write your own player class
@@ -68,7 +88,7 @@ Player.prototype.handleInput = function(direction) {
     var displacement = 60;
 
     var canvas = document.getElementsByTagName("canvas")[0];
-    var playerSprite = window.Resources.get("images/char-boy.png");
+    var playerSprite = window.Resources.get(player.sprite);
 
     switch (direction) {
         case "left":
