@@ -64,20 +64,43 @@ Player.prototype.render = function() {
 // move the player
 Player.prototype.handleInput = function(direction) {
     // units to move per input
-    var displacement = 10;
+    var displacement = 60;
+
+    var canvas = document.getElementsByTagName("canvas")[0];
+    var playerSprite = window.Resources.get("images/char-boy.png");
 
     switch (direction) {
         case "left":
-            this.update(this.x - displacement, this.y);
+            if (this.x - displacement >= 0) {
+                this.update(this.x - displacement, this.y);
+            } else {
+                this.update(0, this.y);
+            }
+
             break;
         case "up":
-            this.update(this.x, this.y - displacement);
+            if (this.y - displacement >= 0) {
+                this.update(this.x, this.y - displacement);
+            } else {
+                this.update(this.x, 0);
+            }
+
             break;
         case "right":
-            this.update(this.x + displacement, this.y);
+            if (this.x + displacement + playerSprite.width <= canvas.width) {
+                this.update(this.x + displacement, this.y);
+            } else {
+                this.update(canvas.width - playerSprite.width, this.y);
+            }
+
             break;
         case "down":
-            this.update(this.x, this.y + displacement);
+            if (this.y + displacement + playerSprite.height <= canvas.height) {
+                this.update(this.x, this.y + displacement);
+            } else {
+                this.update(this.x, canvas.height - playerSprite.height);
+            }
+
             break;
     }
 };
