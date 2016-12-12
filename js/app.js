@@ -22,6 +22,11 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speed * dt;
+
+    // reset the location if the enemy moves off canvas
+    if (this.x > document.getElementsByTagName("canvas")[0].width) {
+        this.x = -this.speed;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -80,7 +85,7 @@ Player.prototype.handleInput = function(direction) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [new Enemy(50, 50, 10)];
+var allEnemies = [new Enemy(50, 50, 130)];
 var player = new Player(270, 270);
 
 
