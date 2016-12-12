@@ -39,9 +39,12 @@ var Player = function(x, y, speed) {
     // set initial location
     this.x = x;
     this.y = y;
+};
 
-    // set speed
-    this.speed = speed;
+// update the player's location
+Player.prototype.update = function(x, y) {
+    this.x = x;
+    this.y = y;
 };
 
 // Now instantiate your objects.
